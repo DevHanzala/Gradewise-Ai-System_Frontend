@@ -277,7 +277,8 @@ function Signup() {
         title={modal.title}
       >
         {modal.message}
-      </Modal>
+      </Modal> 
+
     </div>
   );
 }

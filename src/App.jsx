@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
 
@@ -38,10 +39,22 @@ import StudentAnalytics from "./Pages/Student/StudentAnalytics";
 
 import ProtectedRoute from "./components/ProtectedRoutes";
 
+// SCROLL TO TOP ON EVERY ROUTE CHANGE
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
   return (
     <Router>
-      <div className="App">
+      <ScrollToTop /> {/* This fixes "start from top" on every navigation */}
+      <div className="App min-h-screen bg-gray-50">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
@@ -61,7 +74,7 @@ function App() {
             }
           />
 
-          {/* Super Admin Routes */}
+          {/* Super Admin */}
           <Route
             path="/super-admin/dashboard"
             element={
@@ -71,7 +84,7 @@ function App() {
             }
           />
 
-          {/* Admin Routes */}
+          {/* Admin */}
           <Route
             path="/admin/dashboard"
             element={
@@ -81,7 +94,7 @@ function App() {
             }
           />
 
-          {/* Instructor Routes */}
+          {/* Instructor */}
           <Route
             path="/instructor/dashboard"
             element={
@@ -146,7 +159,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          
           <Route
             path="/instructor/assessments/:assessmentId/analytics"
             element={
@@ -164,7 +176,7 @@ function App() {
             }
           />
 
-          {/* Student Routes */}
+          {/* Student */}
           <Route
             path="/student/dashboard"
             element={
@@ -190,25 +202,20 @@ function App() {
             }
           />
 
-          {/* Catch-all Route */}
+          {/* 404 - Must be last */}
           <Route path="*" element={<NotFound />} />
         </Routes>
 
-        {/* Toast Notifications */}
+        {/* Toast */}
         <Toaster
           position="top-right"
           toastOptions={{
             duration: 4000,
             style: {
-              background: "#363636",
+              background: "#1f2937",
               color: "#fff",
-            },
-            success: {
-              duration: 3000,
-              theme: {
-                primary: "green",
-                secondary: "black",
-              },
+              borderRadius: "12px",
+              padding: "16px",
             },
           }}
         />

@@ -1,4 +1,3 @@
-// src/Pages/Login.jsx
 import { useState, useEffect } from "react"; // ← ADD useEffect
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -241,14 +240,14 @@ function Login() {
 
       <Footer />
 
-      <Modal
+       <Modal
         isOpen={modal.isOpen}
         onClose={() => setModal({ ...modal, isOpen: false })}
         type={modal.type}
         title={modal.title}
       >
         {modal.message}
-      </Modal>
+      </Modal> 
     </div>
   );
 }
