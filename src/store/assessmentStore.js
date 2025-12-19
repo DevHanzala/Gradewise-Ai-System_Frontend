@@ -164,11 +164,6 @@ updateAssessment: async (assessmentId, assessmentData) => {
     const token = localStorage.getItem("token");
     if (!token) throw new Error("No authentication token found");
 
-    // === DEBUG: See what we're sending ===
-    console.log("Updating assessment ID:", assessmentId);
-    for (let [key, value] of assessmentData.entries()) {
-      console.log(`FormData → ${key}:`, value);
-    }
 
     // === EXTRACT VALUES SAFELY ===
     const title = assessmentData.get("title")?.trim();
@@ -182,10 +177,6 @@ updateAssessment: async (assessmentId, assessmentData) => {
       throw new Error("Assessment Title is required");
     }
 
-    // Allow empty prompt IF there is at least one of:
-    // - existing selected resources
-    // - new uploaded files
-    // - external links
     const hasLinks = externalLinks.some(l => l && l.trim());
     const hasOldResources = selectedResources.length > 0;
     const hasNewFiles = newFiles.length > 0;

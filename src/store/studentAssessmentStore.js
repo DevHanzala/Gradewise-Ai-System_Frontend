@@ -27,7 +27,6 @@ const useStudentAssessmentStore = create((set, get) => ({
         navigate("/login");
         return;
       }
-      console.log(`📝 Sending request to start assessment with ID ${assessmentId} and language ${language}`);
       const response = await axios.post(
         `${API_URL}/taking/assessments/${assessmentId}/start`,
         { language },
@@ -36,7 +35,6 @@ const useStudentAssessmentStore = create((set, get) => ({
       if (response.data.success) {
         set({
           assessmentQuestions: response.data.data.questions.map((q) => {
-            console.log(`📋 Processing question ${q.id}: options = ${q.options}, correct_answer = ${JSON.stringify(q.correct_answer)}`);
             let parsedOptions = null;
             try {
               parsedOptions = q.options ? (typeof q.options === 'string' ? JSON.parse(q.options) : q.options) : null;
@@ -65,7 +63,6 @@ const useStudentAssessmentStore = create((set, get) => ({
           loading: false,
           hasStarted: true,
         });
-        console.log(`✅ Assessment ${assessmentId} started, attemptId: ${response.data.data.attemptId}`);
       } else {
         throw new Error(response.data.message || "Failed to start assessment");
       }
@@ -112,7 +109,6 @@ const useStudentAssessmentStore = create((set, get) => ({
         questionId: q.id,
         answer: q.answer,
       }));
-      console.log(`📝 Submitting assessment ${assessmentId}, attempt ${attemptId}, answers:`, answers);
       const response = await axios.post(
         `${API_URL}/taking/assessments/${assessmentId}/submit`,
         { attemptId, answers, language },

@@ -25,7 +25,6 @@ const useDashboardStore = create((set) => ({
       });
       if (response.data.success) {
         set({ overview: response.data.data, loading: false });
-        console.log(`✅ Dashboard overview fetched: ${JSON.stringify(response.data.data)}`);
       } else {
         throw new Error(response.data.message || "Failed to fetch overview");
       }

@@ -21,7 +21,6 @@ const useInstructorAnalyticsStore = create((set, get) => ({
       const response = await axios.get(`${API_URL}/instructor-analytics/assessments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(`📦 Response received:`, response.data);
       if (response.data.success) {
         set({ assessments: response.data.data || [], error: null });
       } else {
@@ -40,11 +39,9 @@ const useInstructorAnalyticsStore = create((set, get) => ({
     try {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No authentication token found");
-      console.log(`🔍 Fetching students for assessment ${assessmentId}`);
       const response = await axios.get(`${API_URL}/instructor-analytics/assessment/${assessmentId}/students`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(`📦 Student response received:`, response.data);
       if (response.data.success) {
         set({ students: response.data.data || [], selectedAssessmentId: assessmentId });
       } else {
