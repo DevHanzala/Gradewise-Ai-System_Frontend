@@ -46,7 +46,7 @@ function CreateAssessment() {
   useEffect(() => {
     fetchAllResources();
 
-    const API_URL = import.meta.env.VITE_API_URL || "https://gradeadmin.techmiresolutions.com";
+    const API_URL = import.meta.env.VITE_API_URL || "https://gradeadmin.techmiresolutions.com/api";
     const socket = io(API_URL, {
       transports: ["websocket"],
       withCredentials: true,
@@ -54,13 +54,18 @@ function CreateAssessment() {
 
     socketRef.current = socket;
 
-    
+    socket.on("connect", () => {
+      console.log("Socket connected:", socket.id);
+    });
 
     socket.on("assessment-progress", (data) => {
       setProgress(data.percent);
       setProgressMessage(data.message);
     });
 
+    socket.on("disconnect", () => {
+      console.log("Socket disconnected");
+    });
 
     return () => {
       socket.disconnect();
@@ -458,7 +463,7 @@ function CreateAssessment() {
                           disabled={isProcessing}
                         >
                           <option value="multiple_choice">Multiple Choice</option>
-                          <option value="short_answer">Short Answer</option>
+                          {/* <option value="short_answer">Short Answer</option> */}
                           <option value="true_false">True/False</option>
                         </select>
                       </div>
