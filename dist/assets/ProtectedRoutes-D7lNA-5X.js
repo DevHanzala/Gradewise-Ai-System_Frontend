@@ -1,0 +1,1 @@
+import{a as s,j as t,ai as r}from"./index-BE97Blc-.js";function i({allowedRoles:o,children:u}){const{token:n,user:e}=s();return n?!e||!e.role?t.jsx(r,{to:"/login",replace:!0}):o&&!o.includes(e.role)?t.jsx(r,{to:"/",replace:!0}):u:t.jsx(r,{to:"/login",replace:!0})}export{i as default};
